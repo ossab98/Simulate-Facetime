@@ -28,6 +28,8 @@ class CameraManager: NSObject {
                     self?.addVideoInput(position: position)
                 }
             }
+        case .denied:
+            print("User has rejected permission")
         case .restricted:
             // Denied access to camera
             print("Unable to access the Camera\nTo enable access, go to Settings > Privacy > Camera and turn on Camera access for this app.")
@@ -55,7 +57,7 @@ class CameraManager: NSObject {
         previewLayer.session = session
         
         self.session = session
-        session.startRunning()
+        self.session?.startRunning()
     }
     
 }

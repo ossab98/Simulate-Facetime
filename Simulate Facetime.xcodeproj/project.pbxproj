@@ -19,6 +19,7 @@
 		6F983675268F7F3E007DFF95 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F983674268F7F3E007DFF95 /* User.swift */; };
 		6F983678268F8A1E007DFF95 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F983677268F8A1E007DFF95 /* CameraManager.swift */; };
 		6F98367B268FAA2B007DFF95 /* UITableView-Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F98367A268FAA2B007DFF95 /* UITableView-Extention.swift */; };
+		6FB2F0E02691CAB200C4B566 /* CallingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB2F0DF2691CAB200C4B566 /* CallingController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		6F983674268F7F3E007DFF95 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		6F983677268F8A1E007DFF95 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		6F98367A268FAA2B007DFF95 /* UITableView-Extention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView-Extention.swift"; sourceTree = "<group>"; };
+		6FB2F0DF2691CAB200C4B566 /* CallingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 				6F983663268F7C73007DFF95 /* Model */,
 				6F983664268F7C79007DFF95 /* Views */,
 				6F983671268F7D07007DFF95 /* Contacts Controller */,
+				6FB2F0DE2691CA9C00C4B566 /* Calling Controller */,
 				6F983676268F8A03007DFF95 /* Util */,
 				6F983633268F7635007DFF95 /* AppDelegate.swift */,
 				6F983635268F7635007DFF95 /* SceneDelegate.swift */,
@@ -178,6 +181,14 @@
 				6F98367A268FAA2B007DFF95 /* UITableView-Extention.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		6FB2F0DE2691CA9C00C4B566 /* Calling Controller */ = {
+			isa = PBXGroup;
+			children = (
+				6FB2F0DF2691CAB200C4B566 /* CallingController.swift */,
+			);
+			path = "Calling Controller";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -310,6 +321,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6FB2F0E02691CAB200C4B566 /* CallingController.swift in Sources */,
 				6F98367B268FAA2B007DFF95 /* UITableView-Extention.swift in Sources */,
 				6F983638268F7635007DFF95 /* ContactsController.swift in Sources */,
 				6F983675268F7F3E007DFF95 /* User.swift in Sources */,
