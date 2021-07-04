@@ -72,6 +72,7 @@ extension CallingController{
     @IBAction func onStopCameraTapped(_ sender: UIButton) {
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
         DispatchQueue.main.async {
+            CameraManager.shared.session?.startRunning()
             CameraManager.shared.session?.stopRunning()
         }
     }
