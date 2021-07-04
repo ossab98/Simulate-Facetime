@@ -91,7 +91,9 @@
                             <constraint firstAttribute="bottom" secondItem="BfQ-rX-bWk" secondAttribute="bottom" id="gBQ-Go-Otg"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Simulate Facetime" id="LSv-JK-pWu"/>
+                    <navigationItem key="navigationItem" title="Simulate Facetime" id="LSv-JK-pWu">
+                        <barButtonItem key="backBarButtonItem" title=" " id="j4h-d1-uYG"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="BfQ-rX-bWk" id="OIM-zK-El8"/>
                     </connections>

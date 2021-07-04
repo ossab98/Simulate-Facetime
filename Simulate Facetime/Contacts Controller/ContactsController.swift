@@ -165,14 +165,14 @@ extension ContactsController{
     
     
     func addDemoContacts(){
-        contacts.append(User(id: 1, name: "Otacílio da Mota", image: "person.circle", lastCallDate: "02/07/2021", lastCallTime: "12:00"))
-        contacts.append(User(id: 2, name: "Eliott Aubert", image: "person.crop.circle", lastCallDate: "01/07/2021", lastCallTime: "14:34"))
-        contacts.append(User(id: 3, name: "Sophia Ouellet", image: "person.crop.circle.fill", lastCallDate: "22/06/2021", lastCallTime: "02:12"))
-        contacts.append(User(id: 4, name: "Daniel Lakso", image: "figure.walk.circle.fill", lastCallDate: "18/06/2021", lastCallTime: "22:09"))
-        contacts.append(User(id: 5, name: "Malik Margaret", image: "figure.wave.circle.fill", lastCallDate: "15/06/2021", lastCallTime: "10:04"))
-        contacts.append(User(id: 6, name: "Safiya Ritsema", image: "person.circle", lastCallDate: "01/06/2021", lastCallTime: "07:57"))
-        contacts.append(User(id: 7, name: "Chester James", image: "person.crop.square.fill", lastCallDate: "28/05/2021", lastCallTime: "00:21"))
-        contacts.append(User(id: 8, name: "Inácia Pires", image: "person.crop.square", lastCallDate: "07/04/2021", lastCallTime: "21:49"))
+        contacts.append(User(id: 1, name: "Otacílio da Mota", lastCallDate: "02/07/2021", lastCallTime: "12:00"))
+        contacts.append(User(id: 2, name: "Eliott Aubert", lastCallDate: "01/07/2021", lastCallTime: "14:34"))
+        contacts.append(User(id: 3, name: "Sophia Ouellet", lastCallDate: "22/06/2021", lastCallTime: "02:12"))
+        contacts.append(User(id: 4, name: "Daniel Lakso", lastCallDate: "18/06/2021", lastCallTime: "22:09"))
+        contacts.append(User(id: 5, name: "Malik Margaret", lastCallDate: "15/06/2021", lastCallTime: "10:04"))
+        contacts.append(User(id: 6, name: "Safiya Ritsema", lastCallDate: "01/06/2021", lastCallTime: "07:57"))
+        contacts.append(User(id: 7, name: "Chester James", lastCallDate: "28/05/2021", lastCallTime: "00:21"))
+        contacts.append(User(id: 8, name: "Inácia Pires", lastCallDate: "07/04/2021", lastCallTime: "21:49"))
     }
     
 }

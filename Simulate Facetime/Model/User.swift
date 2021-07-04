@@ -10,7 +10,6 @@ import Foundation
 struct User {
     let id: Int
     let name: String
-    let image: String
     let lastCallDate: String
     let lastCallTime: String
 }
