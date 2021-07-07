@@ -17,10 +17,26 @@
 - [GitHub](https://github.com)
 
 
+## ScreenShots from: 
+* iPhone xs max, iOS Version 14.6
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/60936508/124750821-35d78480-df26-11eb-8a32-4a6ca969214f.jpg" width="30%" height="30%">
+  <img src="https://user-images.githubusercontent.com/60936508/124750825-37a14800-df26-11eb-83bb-1e37927b8c0a.jpg" width="30%" height="30%">
+  <img src="https://user-images.githubusercontent.com/60936508/124750827-396b0b80-df26-11eb-9339-2220ebdbb1a7.jpg" width="30%" height="30%">
+</div>
+
+
+* iPad 8, iOS Version 14.6
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/60936508/124750914-556ead00-df26-11eb-9ce7-91e69357e4b5.PNG" width="30%" height="30%">
+  <img src="https://user-images.githubusercontent.com/60936508/124750928-57d10700-df26-11eb-859a-21de42f5e841.PNG" width="30%" height="30%">
+</div>
+
+
 ## Requirements
 
 * A Mac running [Xcode](https://it.wikipedia.org/wiki/Xcode).
-* iOS Version 10.0+
+* iOS Version 9.0+
 
 
 ## Notice!
