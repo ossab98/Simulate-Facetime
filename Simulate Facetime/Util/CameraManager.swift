@@ -17,6 +17,23 @@ class CameraManager: NSObject {
     // Video Preview
     let previewLayer = AVCaptureVideoPreviewLayer()
     
+    var isCameraActive: Bool = false
+    var isCameraSupported: Bool {
+        if UIImagePickerController.isSourceTypeAvailable(.camera) == true {
+            // Device has a camera
+            DispatchQueue.main.async {
+                CameraManager.shared.checkCameraPrmissions(position: .front)
+            }
+            return true
+        }else{
+            // Device hasn't a camera!
+            DispatchQueue.main.async {
+                CameraManager.shared.previewLayer.removeFromSuperlayer()
+            }
+            return false
+        }
+    }
+    
     func checkCameraPrmissions(position: AVCaptureDevice.Position) {
         let authStatus = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
         switch authStatus {
@@ -25,16 +42,14 @@ class CameraManager: NSObject {
             AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
                 guard granted else { return }
                 DispatchQueue.main.async {
+                    self?.isCameraActive = true
                     self?.addVideoInput(position: position)
                 }
             }
         case .denied:
-            print("User has rejected permission")
-        case .restricted:
-            // Denied access to camera
-            print("Unable to access the Camera\nTo enable access, go to Settings > Privacy > Camera and turn on Camera access for this app.")
-            break
+            self.isCameraActive = false
         case .authorized:
+            self.isCameraActive = true
             addVideoInput(position: position)
         default:
             break
@@ -43,9 +58,12 @@ class CameraManager: NSObject {
     
     func addVideoInput(position: AVCaptureDevice.Position) {
         let session = AVCaptureSession()
-        guard let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: position) else { return }
+        let devices = AVCaptureDevice.devices(for: .video)
+        let frontCamIndex = 1
+        let backCamIndex = 0
+        let positionIndex = position == .front ? frontCamIndex : backCamIndex
         do {
-            let input = try AVCaptureDeviceInput(device: device)
+            let input = try AVCaptureDeviceInput(device: devices[positionIndex])
             if session.canAddInput(input) {
                 session.addInput(input)
             }
@@ -53,11 +71,12 @@ class CameraManager: NSObject {
             print(error.localizedDescription)
         }
         
-        previewLayer.videoGravity = .resizeAspectFill
-        previewLayer.session = session
-        
-        self.session = session
-        self.session?.startRunning()
+        DispatchQueue.main.async {
+            self.previewLayer.videoGravity = .resizeAspectFill
+            self.previewLayer.session = session
+            self.session = session
+            self.session?.startRunning()
+        }
     }
     
 }

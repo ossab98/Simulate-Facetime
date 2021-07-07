@@ -133,12 +133,12 @@
         <scene sceneID="buS-e7-kFf">
             <objects>
                 <viewController storyboardIdentifier="callingController" modalPresentationStyle="fullScreen" id="VVg-0V-Dxj" customClass="CallingController" customModule="Simulate_Facetime" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="wLr-x3-OOj">
+                    <view key="view" alpha="0.80000000000000004" contentMode="scaleToFill" id="wLr-x3-OOj">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="GsR-jM-NeL">
-                                <rect key="frame" x="20" y="94" width="374" height="82"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="GsR-jM-NeL">
+                                <rect key="frame" x="20" y="94" width="374" height="77"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CxE-fD-ECj">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="36"/>
@@ -147,7 +147,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FaceTime..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Ij-pJ-KyE">
-                                        <rect key="frame" x="0.0" y="46" width="374" height="36"/>
+                                        <rect key="frame" x="0.0" y="41" width="374" height="36"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -288,7 +288,7 @@
                         <outlet property="btnStopVideoCamera" destination="RZO-m0-YFf" id="cYl-fP-fKN"/>
                         <outlet property="effectViewBackground" destination="F9d-pj-jyn" id="rZb-3E-NtP"/>
                         <outlet property="lblCallType" destination="8Ij-pJ-KyE" id="35U-Mw-So8"/>
-                        <outlet property="lblCloseCall" destination="Egk-FO-4aV" id="cN3-8a-4a7"/>
+                        <outlet property="lblEndCall" destination="Egk-FO-4aV" id="cN3-8a-4a7"/>
                         <outlet property="lblFlipCamera" destination="ia1-7I-RJ7" id="o8M-Xr-RMV"/>
                         <outlet property="lblStartVideoCamera" destination="crj-vJ-xkv" id="TlO-XS-2aO"/>
                         <outlet property="lblStopVideoCamera" destination="1HC-qe-5ER" id="tcQ-4d-KGp"/>

@@ -13,19 +13,6 @@ class ContactsController: UIViewController {
     // MARK:- Outlets
     @IBOutlet weak var tableView: UITableView!
     
-    private let lblErrorMessage: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.backgroundColor = .yellow
-        label.textColor = .black
-        label.font = .boldSystemFont(ofSize: 18)
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.layer.masksToBounds = true
-        label.layer.cornerRadius = 15
-        return label
-    }()
-    
     private let blurEffect: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
@@ -35,13 +22,15 @@ class ContactsController: UIViewController {
     
     // MARK: - Properties / Models
     var contacts: [User] = []
-    var deviceHasCamera = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.delegate = self
+        tableView.dataSource = self
+        
         // You can comment this function 'addDemoContacts' to see the app how is working without data!
-        addDemoContacts()
+        demoContacts()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,11 +50,6 @@ class ContactsController: UIViewController {
 //MARK:- extension UITableViewDelegate && UITableViewDataSource
 extension ContactsController: UITableViewDelegate, UITableViewDataSource {
     
-    // numberOfSections
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
     // numberOfRowsInSection
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return contacts.count
@@ -80,11 +64,10 @@ extension ContactsController: UITableViewDelegate, UITableViewDataSource {
     
     // didSelectRowAt
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        view.endEditing(true)
         // Push To CallingController
         let callingController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "callingController") as! CallingController
         callingController.user = contacts[indexPath.row]
-        self.present(callingController, animated: true, completion: .none)
+        present(callingController, animated: true, completion: .none)
     }
     
     // heightForRowAt
@@ -93,57 +76,18 @@ extension ContactsController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-// MARK: - Func Helper
-extension ContactsController {
+// MARK:- Func Helper
+extension ContactsController{
     
     // Reload the tableView
     func reloadView(){
         DispatchQueue.main.async {
-            let message = """
-            Puoi iniziare chiamate FaceTime Video o audio inserendo un nome, un indirizzo e-mail o un numero telefonico.
-            
-            Se non funziona il video devi verificare i permessi nell'imposizione.
-            
-            Vai su Impostazioni > Privacy > fotocamera e attiva Accesso alla fotocamera per questa app.
-            """
-            self.tableView.updateEmptyState(rowsCount: self.contacts.count, emptyMessage: message)
+            self.tableView.updateEmptyState(rowsCount: self.contacts.count, emptyMessage: "You can initiate FaceTime Video or audio calls by entering a name, email address, or phone number.")
             self.tableView.reloadData()
         }
     }
-}
-
-// MARK:- Func Helper
-extension ContactsController{
     
-    func showErrorMessage(message: String){
-        // ShowMessage with animate
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.lblErrorMessage.text = message
-            UIView.animate(withDuration: 0.5, delay: 0.3, options: [], animations: { self.view.layoutIfNeeded() }, completion: nil)
-        }
-        // HideMessage with animate
-        DispatchQueue.main.asyncAfter(deadline: .now() + 11) {
-            UIView.animate(withDuration: 0.5, animations: {
-                self.lblErrorMessage.alpha = 0
-            }) { _ in
-                self.lblErrorMessage.removeFromSuperview()
-            }
-        }
-    }
-    
-    func authorizationStatus(){
-        switch AVCaptureDevice.authorizationStatus(for: AVMediaType.video)  {
-        case .denied:
-            // Denied access to camera
-            showErrorMessage(message: "\nUnable to access the Camera\nTo enable access, go to Settings > Privacy > Camera and turn on Camera access for this app.\n")
-        case .restricted:
-            showErrorMessage(message: "\nUnable to access the Camera\nTo enable access, go to Settings > Privacy > Camera and turn on Camera access for this app.\n")
-        default:
-            break
-        }
-    }
-    
-    func addDemoContacts(){
+    func demoContacts(){
         contacts.append(User(id: 1, name: "Otacílio da Mota", lastCallDate: "02/07/2021", lastCallTime: "12:00"))
         contacts.append(User(id: 2, name: "Eliott Aubert", lastCallDate: "01/07/2021", lastCallTime: "14:34"))
         contacts.append(User(id: 3, name: "Sophia Ouellet", lastCallDate: "22/06/2021", lastCallTime: "02:12"))
@@ -164,41 +108,21 @@ extension ContactsController{
         view.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "avatar-placeholder"))
         
         // Set TableView
-        tableView.delegate = self
-        tableView.dataSource = self
         tableView.backgroundColor = .clear
-        // add a bottom margin to tableview
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         
-        // Check if the device has a camera to enable the videoCamera
-        if UIImagePickerController.isSourceTypeAvailable(.camera) == true {
-            print("Has camera")
-            DispatchQueue.main.async {
-                // Check Camera Prmissions & Add Video Input in Sublayer
-                CameraManager.shared.checkCameraPrmissions(position: .front)
-            }
-            self.view.layer.addSublayer(CameraManager.shared.previewLayer)
-            deviceHasCamera = true
-        }else{
-            print("Hasn't camera!")
-            // Remove Video Input from Sublayer
-            DispatchQueue.main.async {
-                CameraManager.shared.previewLayer.removeFromSuperlayer()
-            }
-            self.showErrorMessage(message: "\nThe camera preview is not available on this device!\n")
-            deviceHasCamera = false
-        }
+        setUpCamera()
         
         view.addSubview(blurEffect)
-        authorizationStatus()
         view.addSubview(tableView)
-        view.addSubview(lblErrorMessage)
-        NSLayoutConstraint.activate([
-            lblErrorMessage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            lblErrorMessage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            lblErrorMessage.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0),
-            lblErrorMessage.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40)
-        ])
+        
         reloadView()
     }
+    
+    func setUpCamera(){
+        if CameraManager.shared.isCameraSupported {
+            view.layer.addSublayer(CameraManager.shared.previewLayer)
+        }
+    }
+    
 }
