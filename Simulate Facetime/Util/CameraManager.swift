@@ -17,46 +17,49 @@ class CameraManager: NSObject {
     // Video Preview
     let previewLayer = AVCaptureVideoPreviewLayer()
     
-    var isCameraActive: Bool = false
     var isCameraSupported: Bool {
         if UIImagePickerController.isSourceTypeAvailable(.camera) == true {
             // Device has a camera
             DispatchQueue.main.async {
-                CameraManager.shared.checkCameraPrmissions(position: .front)
+                self.openVideocamera(position: .front)
             }
             return true
         }else{
             // Device hasn't a camera!
             DispatchQueue.main.async {
-                CameraManager.shared.previewLayer.removeFromSuperlayer()
+                self.previewLayer.removeFromSuperlayer()
             }
             return false
         }
     }
     
-    func checkCameraPrmissions(position: AVCaptureDevice.Position) {
+    func checkCameraPrmissions(onRequested: @escaping((Bool)->()) ) {
         let authStatus = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
         switch authStatus {
         case .notDetermined:
             // Request
-            AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
-                guard granted else { return }
-                DispatchQueue.main.async {
-                    self?.isCameraActive = true
-                    self?.addVideoInput(position: position)
-                }
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                guard granted else { onRequested(false); return }
+                onRequested(true)
             }
         case .denied:
-            self.isCameraActive = false
+            onRequested(false)
         case .authorized:
-            self.isCameraActive = true
-            addVideoInput(position: position)
+            onRequested(true)
         default:
             break
         }
     }
     
-    func addVideoInput(position: AVCaptureDevice.Position) {
+    func openVideocamera(position: AVCaptureDevice.Position){
+        self.checkCameraPrmissions() { [weak self] isGranted in
+            if isGranted == true {
+                self?.addVideoInput(position: position)
+            }
+        }
+    }
+    
+    private func addVideoInput(position: AVCaptureDevice.Position) {
         let session = AVCaptureSession()
         let devices = AVCaptureDevice.devices(for: .video)
         let frontCamIndex = 1
@@ -71,7 +74,7 @@ class CameraManager: NSObject {
             print(error.localizedDescription)
         }
         
-        DispatchQueue.main.async {
+        DispatchQueue.global(qos: .background).async {
             self.previewLayer.videoGravity = .resizeAspectFill
             self.previewLayer.session = session
             self.session = session

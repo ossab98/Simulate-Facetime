@@ -11,6 +11,8 @@
 - [AVCaptureVideoPreviewLayer](https://developer.apple.com/documentation/avfoundation/avcapturevideopreviewlayer)
 - [Animate](https://developer.apple.com/documentation/uikit/uiview/1622515-animate)
 - [Async operation dispatchqueue](https://www.avanderlee.com/swift/asynchronous-operations/)
+- [Completion handler](https://medium.com/@dhavalkansara51/completion-handler-in-swift-with-escaping-and-nonescaping-closures-1ea717dc93a4)
+- [XCTest](https://developer.apple.com/documentation/xctest)
 - [MVC design pattern](https://it.wikipedia.org/wiki/Model-view-controller)
 - [Singleton](https://it.wikipedia.org/wiki/Singleton_(informatica))
 - [Extensions](https://docs.swift.org/swift-book/LanguageGuide/Extensions.html)

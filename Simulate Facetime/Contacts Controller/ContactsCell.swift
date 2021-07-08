@@ -10,9 +10,9 @@ import UIKit
 class ContactsCell: UITableViewCell {
     
     // MARK:- Outlets
-    @IBOutlet weak var imgUserProfile: UIImageView!
-    @IBOutlet weak var lblUserFullName: UILabel!
-    @IBOutlet weak var lblUserLastCall: UILabel!
+    @IBOutlet private weak var imgUserProfile: UIImageView!
+    @IBOutlet private weak var lblUserFullName: UILabel!
+    @IBOutlet private weak var lblUserLastCall: UILabel!
     
     func setUpCell(_ user: User){
         

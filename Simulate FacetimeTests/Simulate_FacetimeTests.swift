@@ -9,25 +9,27 @@ import XCTest
 @testable import Simulate_Facetime
 
 class Simulate_FacetimeTests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    
+    // MARK:- ContactsController
+    func testContactsEmpty() throws {
+        let controller = ContactsController()
+        //controller.demoContacts()
+        XCTAssertTrue(controller.contacts.isEmpty, "Array is Empty")
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    func testContactsNotEmpty() throws {
+        let controller = ContactsController()
+        controller.demoContacts()
+        XCTAssertFalse(controller.contacts.isEmpty, "Array isn't Empty, Contacts count: \(controller.contacts.count)")
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    
+    // MARK:- CameraManager
+    func testCameraSupported() throws {
+        if CameraManager.shared.isCameraSupported == true {
+            XCTAssertTrue(CameraManager.shared.isCameraSupported, "Device has a camera")
+        }else{
+            XCTAssertFalse(CameraManager.shared.isCameraSupported, "Device hasn't a camera")
         }
     }
-
+    
 }

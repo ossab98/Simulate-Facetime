@@ -10,26 +10,26 @@ import UIKit
 class CallingController: UIViewController {
     
     // header labels
-    @IBOutlet weak var stackViewHeader: UIStackView!
-    @IBOutlet weak var lblUserFullName: UILabel!
-    @IBOutlet weak var lblCallType: UILabel!
+    @IBOutlet private weak var stackViewHeader: UIStackView!
+    @IBOutlet private weak var lblUserFullName: UILabel!
+    @IBOutlet private weak var lblCallType: UILabel!
     // video camera controller
-    @IBOutlet weak var effectViewBackground: UIVisualEffectView!
-    @IBOutlet weak var lineView: UIView!
+    @IBOutlet private weak var effectViewBackground: UIVisualEffectView!
+    @IBOutlet private weak var lineView: UIView!
     // stop video camera
-    @IBOutlet weak var btnStopVideoCamera: UIButton!
-    @IBOutlet weak var lblStopVideoCamera: UILabel!
+    @IBOutlet private weak var btnStopVideoCamera: UIButton!
+    @IBOutlet private weak var lblStopVideoCamera: UILabel!
     // start video camera
-    @IBOutlet weak var btnStartVideoCamera: UIButton!
-    @IBOutlet weak var lblStartVideoCamera: UILabel!
+    @IBOutlet private weak var btnStartVideoCamera: UIButton!
+    @IBOutlet private weak var lblStartVideoCamera: UILabel!
     // flip video camera
-    @IBOutlet weak var btnFlipCamera: UIButton!
-    @IBOutlet weak var lblFlipCamera: UILabel!
+    @IBOutlet private weak var btnFlipCamera: UIButton!
+    @IBOutlet private weak var lblFlipCamera: UILabel!
     // end call
-    @IBOutlet weak var btnEndCall: UIButton!
-    @IBOutlet weak var lblEndCall: UILabel!
+    @IBOutlet private weak var btnEndCall: UIButton!
+    @IBOutlet private weak var lblEndCall: UILabel!
     
-    let lblErrorMessage: UILabel = {
+    private let lblErrorMessage: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.backgroundColor = .yellow
@@ -83,7 +83,7 @@ extension CallingController{
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
         }
         animateButtonClickA(cellToAnimate: btnStopVideoCamera)
-        DispatchQueue.main.async {
+        DispatchQueue.global(qos: .background).async {
             CameraManager.shared.session?.stopRunning()
         }
     }
@@ -93,7 +93,7 @@ extension CallingController{
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
         }
         animateButtonClickA(cellToAnimate: btnStartVideoCamera)
-        DispatchQueue.main.async {
+        DispatchQueue.global(qos: .background).async {
             CameraManager.shared.session?.startRunning()
         }
     }
@@ -105,14 +105,12 @@ extension CallingController{
         animateButtonClickA(cellToAnimate: btnFlipCamera)
         sender.isSelected = !sender.isSelected
         if sender.isSelected {
-            print(sender.isSelected)
             DispatchQueue.main.async {
-                CameraManager.shared.checkCameraPrmissions(position: .back)
+                CameraManager.shared.openVideocamera(position: .back)
             }
         } else {
-            print(sender.isSelected)
             DispatchQueue.main.async {
-                CameraManager.shared.checkCameraPrmissions(position: .front)
+                CameraManager.shared.openVideocamera(position: .front)
             }
         }
     }
@@ -147,7 +145,7 @@ extension CallingController{
     
     func deviceHasCameraActive(_ cameraActive: Bool){
         if cameraActive == true {
-            view.backgroundColor = UIColor.black.withAlphaComponent(0.8)
+            view.backgroundColor = UIColor.black.withAlphaComponent(1.0)
             btnStopVideoCamera.isEnabled = true
             lblStopVideoCamera.alpha = 1
             btnStartVideoCamera.isEnabled = true
@@ -196,11 +194,13 @@ extension CallingController{
     }
     
     func handleCameraSupported(){
-        if CameraManager.shared.isCameraActive == true {
-            deviceHasCameraActive(true)
-        }else{
-            deviceHasCameraActive(false)
-            showErrorMessage(message: "\nUnable to access the Camera\nTo enable access, go to Settings > Privacy > Camera and turn on Camera access for this app.\n")
+        CameraManager.shared.checkCameraPrmissions() { [weak self] isGranted in
+            if isGranted == true {
+                self?.deviceHasCameraActive(true)
+            }else{
+                self?.deviceHasCameraActive(false)
+                self?.showErrorMessage(message: "\nUnable to access the Camera\nTo enable access, go to Settings > Privacy > Camera and turn on Camera access for this app.\n")
+            }
         }
     }
     

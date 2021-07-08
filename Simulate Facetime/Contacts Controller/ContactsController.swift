@@ -6,12 +6,11 @@
 //
 
 import UIKit
-import AVFoundation
 
 class ContactsController: UIViewController {
     
     // MARK:- Outlets
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
     
     private let blurEffect: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
@@ -64,7 +63,7 @@ extension ContactsController: UITableViewDelegate, UITableViewDataSource {
     
     // didSelectRowAt
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Push To CallingController
+        // present To CallingController
         let callingController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "callingController") as! CallingController
         callingController.user = contacts[indexPath.row]
         present(callingController, animated: true, completion: .none)
