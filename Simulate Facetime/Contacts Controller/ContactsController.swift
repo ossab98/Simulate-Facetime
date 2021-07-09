@@ -15,7 +15,6 @@ class ContactsController: UIViewController {
     private let blurEffect: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         return blurEffectView
     }()
     
@@ -28,7 +27,7 @@ class ContactsController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-        // You can comment this function 'addDemoContacts' to see the app how is working without data!
+        // You can comment this function 'demoContacts' to see the app how is working without data!
         demoContacts()
     }
     
@@ -80,10 +79,8 @@ extension ContactsController{
     
     // Reload the tableView
     func reloadView(){
-        DispatchQueue.main.async {
-            self.tableView.updateEmptyState(rowsCount: self.contacts.count, emptyMessage: "You can initiate FaceTime Video or audio calls by entering a name, email address, or phone number.")
-            self.tableView.reloadData()
-        }
+        tableView.updateEmptyState(rowsCount: contacts.count, emptyMessage: "You can initiate FaceTime Video or audio calls by entering a name, email address, or phone number.")
+        tableView.reloadData()
     }
     
     func demoContacts(){

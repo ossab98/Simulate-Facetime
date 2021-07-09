@@ -45,7 +45,6 @@ class CallingController: UIViewController {
     private let blurEffect: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         return blurEffectView
     }()
     
@@ -82,7 +81,7 @@ extension CallingController{
         if #available(iOS 10.0, *) {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
         }
-        animateButtonClickA(cellToAnimate: btnStopVideoCamera)
+        animateButtonClickA(buttonToAnimate: btnStopVideoCamera)
         DispatchQueue.global(qos: .background).async {
             CameraManager.shared.session?.stopRunning()
         }
@@ -92,7 +91,7 @@ extension CallingController{
         if #available(iOS 10.0, *) {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
         }
-        animateButtonClickA(cellToAnimate: btnStartVideoCamera)
+        animateButtonClickA(buttonToAnimate: btnStartVideoCamera)
         DispatchQueue.global(qos: .background).async {
             CameraManager.shared.session?.startRunning()
         }
@@ -102,7 +101,7 @@ extension CallingController{
         if #available(iOS 10.0, *) {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
         }
-        animateButtonClickA(cellToAnimate: btnFlipCamera)
+        animateButtonClickA(buttonToAnimate: btnFlipCamera)
         sender.isSelected = !sender.isSelected
         if sender.isSelected {
             DispatchQueue.main.async {
@@ -119,7 +118,7 @@ extension CallingController{
         if #available(iOS 10.0, *) {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
         }
-        animateButtonClickA(cellToAnimate: btnEndCall)
+        animateButtonClickA(buttonToAnimate: btnEndCall)
         self.dismiss(animated: true, completion: nil)
     }
 }
@@ -129,16 +128,16 @@ extension CallingController{
     
     func showErrorMessage(message: String){
         // ShowMessage with animate
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.lblErrorMessage.text = message
-            UIView.animate(withDuration: 0.5, delay: 0.3, options: [], animations: { self.view.layoutIfNeeded() }, completion: nil)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.lblErrorMessage.text = message
+            UIView.animate(withDuration: 0.5, delay: 0.3, options: [], animations: { self?.view.layoutIfNeeded() }, completion: nil)
         }
         // HideMessage with animate
-        DispatchQueue.main.asyncAfter(deadline: .now() + 15) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 15) { [weak self] in
             UIView.animate(withDuration: 0.5, animations: {
-                self.lblErrorMessage.alpha = 0
+                self?.lblErrorMessage.alpha = 0
             }) { _ in
-                self.lblErrorMessage.removeFromSuperview()
+                self?.lblErrorMessage.removeFromSuperview()
             }
         }
     }

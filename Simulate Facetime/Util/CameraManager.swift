@@ -20,14 +20,14 @@ class CameraManager: NSObject {
     var isCameraSupported: Bool {
         if UIImagePickerController.isSourceTypeAvailable(.camera) == true {
             // Device has a camera
-            DispatchQueue.main.async {
-                self.openVideocamera(position: .front)
+            DispatchQueue.main.async { [weak self] in
+                self?.openVideocamera(position: .front)
             }
             return true
         }else{
             // Device hasn't a camera!
-            DispatchQueue.main.async {
-                self.previewLayer.removeFromSuperlayer()
+            DispatchQueue.main.async { [weak self] in
+                self?.previewLayer.removeFromSuperlayer()
             }
             return false
         }
@@ -74,11 +74,11 @@ class CameraManager: NSObject {
             print(error.localizedDescription)
         }
         
-        DispatchQueue.global(qos: .background).async {
-            self.previewLayer.videoGravity = .resizeAspectFill
-            self.previewLayer.session = session
-            self.session = session
-            self.session?.startRunning()
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            self?.previewLayer.videoGravity = .resizeAspectFill
+            self?.previewLayer.session = session
+            self?.session = session
+            self?.session?.startRunning()
         }
     }
     

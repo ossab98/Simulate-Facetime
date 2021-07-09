@@ -7,7 +7,7 @@
 
 import UIKit
 
-func animateButtonClickA(cellToAnimate: UIButton, _ duration: Double = 0.2, _ preserveIdentity: Bool = true, _ closure: @escaping () -> () = {}){
+func animateButtonClickA(buttonToAnimate: UIButton, _ duration: Double = 0.2, _ preserveIdentity: Bool = true, _ closure: @escaping () -> () = {}){
     
     UIView.animate(withDuration: duration, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: {
         var transform = CATransform3DIdentity
