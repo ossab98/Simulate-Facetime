@@ -13,13 +13,12 @@ func animateButtonClickA(buttonToAnimate: UIButton, _ duration: Double = 0.2, _ 
         var transform = CATransform3DIdentity
         transform.m34 = 1.0 / 500.0
         transform =  CATransform3DScale(transform, 0.8, 0.8, 1)
-        cellToAnimate.layer.transform = transform
+        buttonToAnimate.layer.transform = transform
     }, completion: { finish in
         UIView.animate(withDuration: duration, animations: {
             if preserveIdentity {
-                cellToAnimate.transform = CGAffineTransform.identity
+                buttonToAnimate.transform = CGAffineTransform.identity
             }
-            
             closure()
         })
     })
